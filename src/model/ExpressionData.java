@@ -2,10 +2,10 @@ package model;
 
 public class ExpressionData {
 
-	private String result;
-	private String operand;
-	private String history;
-	private String operator;
+	private static String result;
+	private static String operand;
+	private static String history;
+	private static String operator;
 	
 	/**
 	 * 
@@ -21,37 +21,47 @@ public class ExpressionData {
 		setHistory(history);
 		setOperator(operator);
 	}
+	
+	public ExpressionData()
+	{
+		setResult("0");
+		setOperand("0");
+		setHistory("");
+		setOperator("+");
+	}
 
-	public String getResult() {
+	public static String getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
-		this.result = result;
+	public static void setResult(String _result) {
+		result = _result;
 	}
 
-	public String getOperand() {
+	public static String getOperand() {
 		return operand;
 	}
 
-	public void setOperand(String operand) {
-		this.operand = operand;
+	public static void setOperand(String _operand) {
+		operand = _operand;
 	}
 
-	public String getHistory() {
+	public static String getHistory() {
 		return history;
 	}
 
-	public void setHistory(String history) {
-		this.history = history;
+	public static void setHistory(String _history) {
+		history = _history;
 	}
 
-	public String getOperator() {
+	public static String getOperator() {
 		return operator;
 	}
 
-	public void setOperator(String operator) {
-		this.operator = operator;
+	public static void setOperator(String operator) {
+		ExpressionData.operator = operator;
 	}
+	
+	
 	
 }

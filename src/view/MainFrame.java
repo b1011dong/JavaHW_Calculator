@@ -28,8 +28,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import model.ButtonNumber;
 import model.ExpressionData;
-import control.CalculateControler;
+import controler.MainControler;
 
 public class MainFrame extends JFrame implements ActionListener, KeyListener, MouseListener, MouseWheelListener, MouseMotionListener{
 
@@ -40,24 +41,7 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 	protected int _x;
 	protected int _y;
 	
-	private static final int SEVEN = 0;
-	private static final int EIGHT = 1;
-	private static final int NINE = 2;
-	private static final int DIVIDE = 3;
-	private static final int FOUR = 4;
-	private static final int FIVE = 5;
-	private static final int SIX = 6;
-	private static final int TIMES = 7;
-	private static final int ONE = 8;
-	private static final int TWO = 9;
-	private static final int THREE = 10;
-	private static final int MINUS = 11;
-	private static final int ZERO = 12;
-	private static final int DOT = 13;
-	private static final int EQUALS = 14;
-	private static final int PLUS = 15;
-	private static final int C = 16;
-	private static final int B = 17;
+	private static final int MAX = 18;
 	
 	private JPanel mainPanel;
 	private JPanel textPanel;
@@ -78,7 +62,7 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 	private JButton minimizeButton;
 	
 	private ExpressionData exp;
-	private CalculateControler con;
+	private MainControler con;
 	
 	public MainFrame()
 	{
@@ -123,35 +107,35 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 		}
 		else
 		{
-			if(e.getSource() == keyButton[PLUS])
+			if(e.getSource() == keyButton[ ButtonNumber.PLUS.getNumber() ])
 			{
 				System.out.println("+ Button Clicked");
 			}
-			else if(e.getSource() == keyButton[MINUS])
+			else if(e.getSource() == keyButton[ ButtonNumber.MINUS.getNumber() ])
 			{
 				System.out.println("- Button Clicked");
 			}
-			else if(e.getSource() == keyButton[TIMES])
+			else if(e.getSource() == keyButton[ ButtonNumber.TIMES.getNumber() ])
 			{
 				System.out.println("* Button Clicked");
 			}
-			else if(e.getSource() == keyButton[DIVIDE])
+			else if(e.getSource() == keyButton[ ButtonNumber.DIVIDE.getNumber() ])
 			{
 				System.out.println("/ Button Clicked");
 			}
-			else if(e.getSource() == keyButton[DOT])
+			else if(e.getSource() == keyButton[ ButtonNumber.POINT.getNumber() ])
 			{
 				System.out.println(". Button Clicked");
 			}
-			else if(e.getSource() == keyButton[EQUALS])
+			else if(e.getSource() == keyButton[ ButtonNumber.EQUALS.getNumber() ])
 			{
 				System.out.println("= Button Clicked");
 			}
-			else if(e.getSource() == keyButton[C])
+			else if(e.getSource() == keyButton[ ButtonNumber.C.getNumber() ])
 			{
 				System.out.println("C Button Clicked");
 			}
-			else if(e.getSource() == keyButton[B])
+			else if(e.getSource() == keyButton[ ButtonNumber.B.getNumber() ])
 			{
 				System.out.println("B Button Clicked");
 			}
@@ -160,7 +144,7 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 				System.out.println("number button clicked : " + e.getActionCommand());
 			}
 			
-			performCommand(e.getActionCommand());
+			performCommand( e.getActionCommand() );
 		}
 	}
 
@@ -258,16 +242,20 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 	
 	public void performCommand(String command)
 	{
+		System.out.println("Command perform");
+		
 		con.compute(command);
+		
+		repaintTextField();
 	}
 	
 	public void repaintTextField()
 	{
-		resultTextField.setText(getExp().getResult());
-		operandTextField.setText(getExp().getOperand());
-		historyTextField.setText(getExp().getHistory());
+		resultTextField.setText( ExpressionData.getResult() );
+		operandTextField.setText( ExpressionData.getOperand() );
+		historyTextField.setText( ExpressionData.getHistory() );
 		
-		this.textPanel.validate();
+		this.validate();
 	}
 	
 	
@@ -288,8 +276,9 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 		setLocationRelativeTo(null);
 		addKeyListener(this);
 		
-		exp = new ExpressionData("0123456789", "0123456789", "0123456789+-*/.", null);
-		con = new CalculateControler(exp);
+		exp = new ExpressionData("0123456789", "0123456789", "0123456789+-*/.", "+");
+		exp = new ExpressionData();
+		con = new MainControler();
 	}
 	
 	private void mainPanelSetup()
@@ -362,7 +351,7 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 	
 	private void resultTextFieldSetup()
 	{
-		resultTextField = new JTextField(getExp().getResult());
+		resultTextField = new JTextField(ExpressionData.getResult());
 		resultTextField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		resultTextField.setEditable(false);
 		resultTextField.setFont(new Font("SketchFlow Print", Font.PLAIN, 16));
@@ -373,7 +362,7 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 	
 	private void operandTextFieldSetup()
 	{
-		operandTextField = new JTextField(getExp().getOperand());
+		operandTextField = new JTextField(ExpressionData.getOperand());
 		operandTextField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		operandTextField.setEditable(false);
 		operandTextField.setFont(new Font("SketchFlow Print", Font.PLAIN, 16));
@@ -384,7 +373,7 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 	
 	private void historyTextFieldSetup()
 	{
-		historyTextField = new JTextField(getExp().getHistory());
+		historyTextField = new JTextField(ExpressionData.getHistory());
 		historyTextField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		historyTextField.setEditable(false);
 		historyTextField.setFont(new Font("SketchFlow Print", Font.PLAIN, 16));
@@ -445,19 +434,11 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 	
 	/* ========== Getters and Setters ========== */
 
-	public ExpressionData getExp() {
-		return exp;
-	}
-
-	public void setExp(ExpressionData exp) {
-		this.exp = exp;
-	}
-
-	public CalculateControler getCon() {
+	public MainControler getCon() {
 		return con;
 	}
 
-	public void setCon(CalculateControler con) {
+	public void setCon(MainControler con) {
 		this.con = con;
 	}
 	
