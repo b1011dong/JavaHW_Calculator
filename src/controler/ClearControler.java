@@ -23,6 +23,7 @@ public class ClearControler extends CommandControler {
 		setOperandFlag(true);
 		setOperatorFlag(false);
 		setPointFlag(false);
+		setHasPointFlag(false);
 		setZeroFlag(true);
 	}
 
