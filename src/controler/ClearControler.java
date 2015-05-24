@@ -1,5 +1,7 @@
 package controler;
 
+import model.ExpressionData;
+
 public class ClearControler extends CommandControler {
 
 	public ClearControler(String command)
@@ -9,12 +11,19 @@ public class ClearControler extends CommandControler {
 	
 	@Override
 	public boolean isValid() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public void compute() {
 
+		ExpressionData forClear = new ExpressionData();
+		setEmptyFlag(true);
+		setEqualsFlag(false);
+		setOperandFlag(true);
+		setOperatorFlag(false);
+		setPointFlag(false);
+		setZeroFlag(true);
 	}
 
 }

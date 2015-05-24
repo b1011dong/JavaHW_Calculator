@@ -24,8 +24,8 @@ public class ExpressionData {
 	
 	public ExpressionData()
 	{
-		setResult("0");
-		setOperand("0");
+		setResult("0.0");
+		setOperand("");
 		setHistory("");
 		setOperator("+");
 	}

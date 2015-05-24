@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -31,6 +32,8 @@ import javax.swing.border.LineBorder;
 import model.ButtonNumber;
 import model.ExpressionData;
 import controler.MainControler;
+import controler.OperandControler;
+import controler.PointControler;
 
 public class MainFrame extends JFrame implements ActionListener, KeyListener, MouseListener, MouseWheelListener, MouseMotionListener{
 
@@ -244,7 +247,13 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 	{
 		System.out.println("Command perform");
 		
-		con.compute(command);
+		if ( !con.compute(command) )
+		{
+			if( con.getCon() instanceof OperandControler )
+			{
+				warningMessage();
+			}
+		}
 		
 		repaintTextField();
 	}
@@ -256,6 +265,11 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 		historyTextField.setText( ExpressionData.getHistory() );
 		
 		this.validate();
+	}
+	
+	public void warningMessage()
+	{
+		JOptionPane.showMessageDialog(this, "연산자를 입력하시오");
 	}
 	
 	
@@ -276,7 +290,7 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 		setLocationRelativeTo(null);
 		addKeyListener(this);
 		
-		exp = new ExpressionData("0123456789", "0123456789", "0123456789+-*/.", "+");
+		// exp = new ExpressionData("0123456789", "0123456789", "0123456789+-*/.", "+");
 		exp = new ExpressionData();
 		con = new MainControler();
 	}
@@ -352,7 +366,8 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 	private void resultTextFieldSetup()
 	{
 		resultTextField = new JTextField(ExpressionData.getResult());
-		resultTextField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		// resultTextField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		resultTextField.setHorizontalAlignment(resultTextField.RIGHT);
 		resultTextField.setEditable(false);
 		resultTextField.setFont(new Font("SketchFlow Print", Font.PLAIN, 16));
 		resultTextField.setBackground(Color.WHITE);
@@ -363,7 +378,8 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 	private void operandTextFieldSetup()
 	{
 		operandTextField = new JTextField(ExpressionData.getOperand());
-		operandTextField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		// operandTextField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		operandTextField.setHorizontalAlignment(resultTextField.RIGHT);
 		operandTextField.setEditable(false);
 		operandTextField.setFont(new Font("SketchFlow Print", Font.PLAIN, 16));
 		operandTextField.setBackground(Color.WHITE);
@@ -374,7 +390,8 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener, Mo
 	private void historyTextFieldSetup()
 	{
 		historyTextField = new JTextField(ExpressionData.getHistory());
-		historyTextField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		// historyTextField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		historyTextField.setHorizontalAlignment(resultTextField.RIGHT);
 		historyTextField.setEditable(false);
 		historyTextField.setFont(new Font("SketchFlow Print", Font.PLAIN, 16));
 		historyTextField.setBackground(Color.WHITE);

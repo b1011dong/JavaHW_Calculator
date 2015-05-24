@@ -1,5 +1,7 @@
 package controler;
 
+import model.ExpressionData;
+
 public class BackControler extends CommandControler {
 
 	public BackControler(String command)
@@ -9,12 +11,16 @@ public class BackControler extends CommandControler {
 	
 	@Override
 	public boolean isValid() {
-		return false;
+		if( ExpressionData.getOperand().equals("") )
+			return false;
+		return true;
 	}
 
 	@Override
 	public void compute() {
 
+		String operand = ExpressionData.getOperand();
+		ExpressionData.setOperand( operand.substring(0, operand.length() - 1) );
 	}
 
 }

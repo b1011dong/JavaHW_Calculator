@@ -144,7 +144,7 @@ public abstract class CommandControler{
 		return emptyFlag;
 	}
 
-	private static void setEmptyFlag(boolean _emptyFlag) {
+	public static void setEmptyFlag(boolean _emptyFlag) {
 		emptyFlag = _emptyFlag;
 	}
 

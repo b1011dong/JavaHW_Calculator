@@ -5,6 +5,7 @@ import model.*;
 public class MainControler {
 	
 	private String command;
+	private CommandControler con;
 	
 	
 	/* ========== Constructors ========== */
@@ -29,8 +30,6 @@ public class MainControler {
 	
 	public boolean compute(String command)
 	{
-		CommandControler con;
-		
 		setCommand( command );
 		
 		if( getCommand().equals("+") ) {
@@ -78,5 +77,14 @@ public class MainControler {
 	public void setCommand(String command) {
 		this.command = command;
 	}
+
+	public CommandControler getCon() {
+		return con;
+	}
+
+	public void setCon(CommandControler con) {
+		this.con = con;
+	}
+	
 	
 }
